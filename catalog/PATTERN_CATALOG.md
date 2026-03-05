@@ -9,7 +9,7 @@ Status: [x] = built, [ ] = available to build
 
 ## Category 1: API Patterns
 
-- [ ] **REST CRUD** — Complete REST API with proper status codes, pagination, filtering, sorting. Express + Zod.
+- [x] **REST CRUD** — Complete REST API with proper status codes, pagination, filtering, sorting. Express + Zod. *(built: api-patterns/rest-crud-express)*
 - [ ] **REST CRUD (Fastify)** — Same patterns using Fastify with JSON Schema validation + auto OpenAPI.
 - [ ] **REST CRUD (Hono)** — Same patterns using Hono with Zod OpenAPI middleware.
 - [ ] **tRPC Server** — Type-safe API with routers, procedures, context, middleware. Full client example.
@@ -22,7 +22,7 @@ Status: [x] = built, [ ] = available to build
 
 ## Category 2: Authentication
 
-- [ ] **JWT Auth** — Access + refresh token flow with rotation. Express middleware.
+- [x] **JWT Auth** — Access + refresh token flow with rotation. Express middleware. *(built: auth/jwt-auth)*
 - [ ] **Session Auth** — Cookie-based sessions with Redis store. Login/logout/me endpoints.
 - [ ] **OAuth 2.0 (Arctic)** — Google + GitHub social login using Arctic library.
 - [ ] **Magic Link** — Passwordless email login with token generation + Resend.
@@ -34,11 +34,11 @@ Status: [x] = built, [ ] = available to build
 
 ## Category 3: Middleware & Security
 
-- [ ] **Production Middleware Stack** — Helmet + CORS + Morgan + rate-limit + error handler. Copy-paste ready.
-- [ ] **Zod Validation Middleware** — Request body/params/query validation with typed errors.
+- [x] **Production Middleware Stack** — Helmet + CORS + Morgan + rate-limit + error handler. Copy-paste ready. *(built: middleware/production-stack)*
+- [x] **Zod Validation Middleware** — Request body/params/query validation with typed errors. *(built: middleware/zod-validation)*
 - [ ] **Valibot Validation** — Same patterns with Valibot for bundle-size comparison.
-- [ ] **Centralized Error Handler** — Custom AppError class, async wrapper, structured error responses.
-- [ ] **Request Logging** — Pino structured logging with request IDs, timing, and log levels.
+- [x] **Centralized Error Handler** — Custom AppError class, async wrapper, structured error responses. *(built: middleware/error-handler)*
+- [x] **Request Logging** — Pino structured logging with request IDs, timing, and log levels. *(built: middleware/request-logging)*
 - [ ] **CORS Configuration** — Dev/staging/production CORS configs with credentials handling.
 - [ ] **Content Security Policy** — CSP header configuration for different app types.
 - [ ] **Input Sanitization** — XSS prevention, SQL injection prevention, path traversal prevention.
@@ -55,7 +55,7 @@ Status: [x] = built, [ ] = available to build
 
 ## Category 5: File Handling & Storage
 
-- [ ] **Presigned Upload** — S3/R2 presigned URL generation + client-side upload flow.
+- [x] **Presigned Upload** — S3/R2 presigned URL generation + client-side upload flow. *(built: file-handling/presigned-upload)*
 - [ ] **Multipart Upload** — Multer middleware for direct server upload with validation.
 - [ ] **Image Processing** — Sharp for resize/crop/format on upload. Thumbnail generation.
 - [ ] **File Streaming** — Busboy streaming parser for large file handling.
@@ -64,7 +64,7 @@ Status: [x] = built, [ ] = available to build
 
 ## Category 6: Email
 
-- [ ] **Resend Basic** — Send transactional email with Resend SDK.
+- [x] **Resend Basic** — Send transactional email with Resend SDK. *(built: email/resend-basic)*
 - [ ] **React Email Templates** — 5 email templates (welcome, reset, invoice, notification, digest).
 - [ ] **Email Queue** — BullMQ + Resend for reliable email delivery with retries.
 - [ ] **Nodemailer SMTP** — Traditional SMTP sending for self-hosted setups.
@@ -82,7 +82,7 @@ Status: [x] = built, [ ] = available to build
 
 ## Category 9: Deployment Patterns (preview — full coverage in infra-craft)
 
-- [ ] **Docker API** — Dockerfile + docker-compose for Node.js API.
+- [x] **Docker API** — Dockerfile + docker-compose for Node.js API. *(built: api-patterns/docker-api)*
 - [ ] **Health Check Endpoint** — Liveness + readiness probes for container orchestration.
 - [ ] **Graceful Shutdown** — SIGTERM handling, connection draining, cleanup.
 - [ ] **Environment Config** — Type-safe env with @t3-oss/env-core + Zod.
