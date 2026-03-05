@@ -1,0 +1,24 @@
+{
+  "name": "resend-basic-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Transactional email with Resend, Express, and TypeScript",
+  "scripts": {
+    "dev": "npx tsx watch server.ts",
+    "start": "npx tsx server.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "resend": "^4.1.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

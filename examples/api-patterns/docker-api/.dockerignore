@@ -1,0 +1,53 @@
+# =============================================================================
+# .dockerignore — Files excluded from the Docker build context
+#
+# This is critical for:
+#   1. Build speed — smaller context = faster `docker build`
+#   2. Security — prevents secrets from leaking into the image
+#   3. Cache efficiency — irrelevant files don't bust layer cache
+# =============================================================================
+
+# Dependencies (installed inside the container via npm ci)
+node_modules
+
+# Build output (rebuilt inside the container)
+dist
+
+# Environment files (contain secrets — NEVER bake into images)
+.env
+.env.*
+
+# Git
+.git
+.gitignore
+
+# Docker files (the Dockerfile itself doesn't need to be in the image)
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+.dockerignore
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__
+coverage
+
+# Documentation
+*.md
+LICENSE

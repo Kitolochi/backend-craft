@@ -1,0 +1,114 @@
+# =============================================================================
+# Docker Compose — Local Development Setup
+#
+# Usage:
+#   docker compose up        — start all services
+#   docker compose up -d     — start in background
+#   docker compose down      — stop and remove containers
+#   docker compose logs -f   — tail logs
+#
+# This file defines:
+#   1. api    — the Node.js API (with dev volume mounts + hot reload)
+#   2. redis  — Redis instance (for when you add BullMQ, caching, etc.)
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # API Service
+  # ---------------------------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # In development, we can target just the build stage or use tsx directly.
+      # For hot-reload, we override the command and mount source code.
+
+    # Override the production CMD with tsx for hot-reloading in development.
+    command: npx tsx watch server.ts
+
+    ports:
+      - "${PORT:-3000}:3000"
+
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      APP_VERSION: "1.0.0-dev"
+      SHUTDOWN_TIMEOUT: 10
+      # Redis connection (when you add a Redis client):
+      # REDIS_URL: redis://redis:6379
+
+    # Mount source code for hot-reload during development.
+    # Changes to .ts files trigger automatic restart via tsx watch.
+    volumes:
+      - ./server.ts:/app/server.ts:ro
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      # Prevent the container's node_modules from being overwritten
+      # by a potentially different host node_modules.
+      - /app/node_modules
+
+    depends_on:
+      redis:
+        condition: service_healthy
+
+    networks:
+      - app-network
+
+    # Restart on crash, but not if manually stopped.
+    restart: unless-stopped
+
+    # Resource limits — prevent runaway memory/CPU in development.
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "1.0"
+
+  # ---------------------------------------------------------------------------
+  # Redis Service
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+
+    # Persist Redis data across container restarts.
+    volumes:
+      - redis-data:/data
+
+    # Redis health check — ensures the service is ready before the API starts.
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+    networks:
+      - app-network
+
+    restart: unless-stopped
+
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.5"
+
+# ---------------------------------------------------------------------------
+# Networks
+# ---------------------------------------------------------------------------
+networks:
+  app-network:
+    driver: bridge
+    # All services on this network can reach each other by service name.
+    # e.g., the API can connect to Redis at "redis:6379".
+
+# ---------------------------------------------------------------------------
+# Volumes
+# ---------------------------------------------------------------------------
+volumes:
+  redis-data:
+    driver: local
+    # Named volume persists Redis data between `docker compose down` and `up`.
+    # Use `docker compose down -v` to delete volumes and start fresh.

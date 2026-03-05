@@ -1,0 +1,25 @@
+{
+  "name": "docker-api-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production Docker setup for a Node.js TypeScript API",
+  "scripts": {
+    "dev": "npx tsx watch server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "docker:build": "docker build -t docker-api .",
+    "docker:run": "docker run -p 3000:3000 docker-api",
+    "docker:up": "docker compose up",
+    "docker:down": "docker compose down"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
